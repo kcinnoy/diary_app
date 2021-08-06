@@ -1,7 +1,15 @@
+import 'package:diary_app/widgets/dropdown_one.dart';
 import 'package:flutter/material.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
+
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  String? _dropDownText;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +30,63 @@ class MainPage extends StatelessWidget {
                 fontSize: 39,
                 color: Colors.green,
               ),
-            )
+            ),
           ],
         ),
-        backgroundColor: Colors.grey.shade100,
-        toolbarHeight: 70,
-        elevation: 4,
+        actions: <Widget>[
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    hint: (_dropDownText == null)
+                        ? Text(
+                            'Select',
+                            style: TextStyle(color: Colors.grey),
+                          )
+                        : Text(
+                            _dropDownText!,
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                    items: <String>['Latest', 'Earliest']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      if (value == 'Latest') {
+                        setState(() {
+                          _dropDownText = value.toString();
+                        });
+                      } else if (value == 'Earliest') {
+                        setState(() {
+                          _dropDownText = value.toString();
+                        });
+                      }
+                    }, //onChanged
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                    dropdownColor: Colors.deepOrange,
+                  ),
+                ),
+              )
+            ],
+          ),
+          DropdownOne(),
+        ],
+        backgroundColor: Colors.grey[200],
+        toolbarHeight: 100,
+        elevation: 0,
       ),
     );
   }
