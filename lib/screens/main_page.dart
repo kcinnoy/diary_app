@@ -82,7 +82,9 @@ class _MainPageState extends State<MainPage> {
               )
             ],
           ),
-          DropdownOne(),
+          DropdownOne(
+            text: "CTA",
+          ),
         ],
         backgroundColor: Colors.grey[200],
         toolbarHeight: 100,
