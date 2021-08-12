@@ -15,6 +15,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //primary: false,
         title: Row(
           children: [
             Text(
@@ -79,15 +80,32 @@ class _MainPageState extends State<MainPage> {
                     dropdownColor: Colors.deepOrange,
                   ),
                 ),
-              )
+              ),
+              DropdownOne(
+                text: "CTA",
+              ),
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    children: [
+                      InkWell(
+                        child: CircleAvatar(
+                          radius: 30,
+                          backgroundImage: NetworkImage(
+                              'https://picsum.photos/id/1005/200/300'),
+                          backgroundColor: Colors.transparent,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
-          ),
-          DropdownOne(
-            text: "CTA",
           ),
         ],
         backgroundColor: Colors.grey[200],
-        toolbarHeight: 100,
+        toolbarHeight: 70,
         elevation: 0,
       ),
     );

@@ -43,7 +43,7 @@ class _DropdownOneState extends State<DropdownOne> {
       return Positioned(
         left: xPosition,
         width: width,
-        top: yPosition! + height!,
+        top: yPosition! + height! + 20,
         height: 2 * height!,
         child: DropDown(
           itemHeight: height,
@@ -72,7 +72,7 @@ class _DropdownOneState extends State<DropdownOne> {
         width: 150,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.red[600],
+            color: Colors.transparent,
           ),
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Row(
@@ -80,8 +80,8 @@ class _DropdownOneState extends State<DropdownOne> {
               Text(
                 widget.text!,
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
+                  color: Colors.grey,
+                  fontSize: 16,
                 ),
               ),
               Spacer(),
@@ -132,13 +132,15 @@ class DropDown extends StatelessWidget {
             ),
             child: Column(
               children: <Widget>[
-                DropDownItem(
+                DropDownItem.first(
                   text: "Earliest",
                   iconData: Icons.arrow_circle_up_sharp,
+                  isSelected: false,
                 ),
-                DropDownItem(
+                DropDownItem.last(
                   text: "Latest",
                   iconData: Icons.arrow_circle_down_sharp,
+                  isSelected: false,
                 ),
               ],
             ),
@@ -153,30 +155,55 @@ class DropDownItem extends StatelessWidget {
   final String? text;
   final IconData? iconData;
   final bool? isSelected;
+  final bool isFirstItem;
+  final bool isLastItem;
 
-  const DropDownItem({Key? key, this.text, this.iconData, this.isSelected})
+  const DropDownItem(
+      {Key? key,
+      this.text,
+      this.iconData,
+      this.isSelected = false,
+      this.isFirstItem = false,
+      this.isLastItem = false})
       : super(key: key);
 
   factory DropDownItem.first(
       {String? text, IconData? iconData, bool? isSelected}) {
-    return DropDownItem();
+    return DropDownItem(
+      text: text,
+      iconData: iconData,
+      isSelected: isSelected,
+      isFirstItem: true,
+    );
+  }
+
+  factory DropDownItem.last(
+      {String? text, IconData? iconData, bool? isSelected}) {
+    return DropDownItem(
+      text: text,
+      iconData: iconData,
+      isSelected: isSelected,
+      isLastItem: true,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.red[600],
-        borderRadius: BorderRadius.circular(8),
+        color: isSelected! ? Colors.red[900] : Colors.red[600],
+        borderRadius: BorderRadius.vertical(
+            top: isFirstItem ? Radius.circular(8) : Radius.zero,
+            bottom: isLastItem ? Radius.circular(8) : Radius.zero),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 1),
       child: Row(
         children: [
           Text(
             text!,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 16,
             ),
           ),
           Spacer(),
