@@ -91,11 +91,32 @@ class _MainPageState extends State<MainPage> {
                     children: [
                       InkWell(
                         child: CircleAvatar(
+                          child: Text(
+                            'James \n Smith',
+                            softWrap: true,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 10,
+                            ),
+                          ),
                           radius: 30,
+                          backgroundColor: Colors.red,
                           backgroundImage: NetworkImage(
                               'https://picsum.photos/id/1005/200/300'),
-                          backgroundColor: Colors.transparent,
                         ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              Icons.view_agenda_outlined,
+                              size: 19,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {},
+                          )
+                        ],
                       ),
                     ],
                   ),
@@ -107,6 +128,27 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: Colors.grey[200],
         toolbarHeight: 70,
         elevation: 0,
+      ),
+      //Body Start
+      body: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Container(
+              color: Colors.green,
+              child: Column(
+                children: [],
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: Colors.blue,
+              child: Column(),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -76,6 +76,7 @@ class _DropdownOneState extends State<DropdownOne> {
           ),
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 widget.text!,
@@ -84,7 +85,9 @@ class _DropdownOneState extends State<DropdownOne> {
                   fontSize: 16,
                 ),
               ),
-              Spacer(),
+              SizedBox(
+                width: 5,
+              ),
               Icon(
                 Icons.arrow_drop_down,
                 color: Colors.grey,
@@ -105,9 +108,9 @@ class DropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 5,
-        ),
+        //SizedBox(
+        //  height: 5,
+        // ),
         Align(
           alignment: Alignment(-0.8, 0),
           child: ClipPath(
