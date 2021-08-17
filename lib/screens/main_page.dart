@@ -182,9 +182,9 @@ class _MainPageState extends State<MainPage> {
                             ),
                           ),
                         ),
-
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -193,10 +193,43 @@ class _MainPageState extends State<MainPage> {
             flex: 3,
             child: Container(
               //color: Colors.blue,
-              child: Column(),
+              child: Column(
+                children: [
+                  Expanded(
+                      child: Container(
+                    child: Column(
+                      children: [
+                        Expanded(
+                            child: ListView.builder(
+                          itemCount: 5,
+                          itemBuilder: (context, index) {
+                            return SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: Card(
+                                elevation: 4,
+                                child: ListTile(
+                                  title: Text('Hi'),
+                                ),
+                              ),
+                            );
+                          },
+                        ))
+                      ],
+                    ),
+                  ))
+                ],
+              ),
             ),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        mini: true,
+        tooltip: 'Add',
+        child: Icon(
+          Icons.add,
+        ),
       ),
     );
   }
