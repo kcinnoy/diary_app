@@ -1,5 +1,6 @@
 import 'package:diary_app/widgets/dropdown_one.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -135,16 +136,63 @@ class _MainPageState extends State<MainPage> {
           Expanded(
             flex: 2,
             child: Container(
-              color: Colors.green,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                border: Border(
+                  right: BorderSide(
+                    width: 0.4,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+              //color: Colors.green,
               child: Column(
-                children: [],
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(38.0),
+                    child: SfDateRangePicker(
+                      onSelectionChanged:
+                          (dateRangePickerSelectionChangedArgs) {},
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(40),
+                    child: Card(
+                      elevation: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: TextButton.icon(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.add_circle_outline_outlined,
+                            size: 20,
+                            color: Colors.grey,
+                          ),
+                          label: Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Text(
+                                'New Post',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                    ),
+                  )
+                ],
               ),
             ),
           ),
           Expanded(
-            flex: 1,
+            flex: 3,
             child: Container(
-              color: Colors.blue,
+              //color: Colors.blue,
               child: Column(),
             ),
           )
