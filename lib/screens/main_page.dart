@@ -192,7 +192,6 @@ class _MainPageState extends State<MainPage> {
           Expanded(
             flex: 3,
             child: Container(
-              //color: Colors.blue,
               child: Column(
                 children: [
                   Expanded(
@@ -200,20 +199,21 @@ class _MainPageState extends State<MainPage> {
                     child: Column(
                       children: [
                         Expanded(
-                            child: ListView.builder(
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: Card(
-                                elevation: 4,
-                                child: ListTile(
-                                  title: Text('Hi'),
+                          child: ListView.builder(
+                            itemCount: 5,
+                            itemBuilder: (context, index) {
+                              return SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                child: Card(
+                                  elevation: 4,
+                                  child: ListTile(
+                                    title: Text('Hi'),
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        ))
+                              );
+                            },
+                          ),
+                        )
                       ],
                     ),
                   ))
