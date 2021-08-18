@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:diary_app/screens/get_started_page.dart';
 import 'package:diary_app/screens/main_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,11 +22,14 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primarySwatch: Colors.green,
       ),
-      home: GetInfo(),
+      home: GettingStartedPage(),
     );
   }
 }
 
+//Getting started class
+
+//GetInfo class
 class GetInfo extends StatelessWidget {
   const GetInfo({Key? key}) : super(key: key);
 
