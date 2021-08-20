@@ -1,8 +1,24 @@
+import 'dart:ui';
+
+import 'package:diary_app/widgets/input_decorator.dart';
+import 'package:diary_app/widgets/login_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  final GlobalKey<FormState>? _globalKey = GlobalKey<FormState>();
+
+  // const LoginPage(
+  //     {Key? key,
+  //     GlobalKey<FormState>? formKey,
+  //     required TextEditingController passwordTextController,
+  //     required TextEditingController emailTextController})
+  //     : _emailTextController = emailTextController,
+  //       _passwordTextController = emailTextController,
+  //       _globalKey = formKey,
+  //       super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +34,20 @@ class LoginPage extends StatelessWidget {
                 color: Colors.indigo.shade200,
               ),
             ),
-            Text(
-              'Sign In',
-              style: TextStyle(
-                color: Colors.red,
-              ),
-            ),
             SizedBox(
               height: 10,
             ),
             Column(
-              children: [],
+              children: [
+                SizedBox(
+                  width: 400,
+                  //height: 300,
+                  child: LoginForm(
+                      formKey: _globalKey,
+                      emailTextController: _emailTextController,
+                      passwordTextController: _passwordTextController),
+                )
+              ],
             ),
             Expanded(
               flex: 2,
