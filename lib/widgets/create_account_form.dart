@@ -1,12 +1,10 @@
-import 'package:diary_app/screens/login_page.dart';
-import 'package:diary_app/screens/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'input_decorator.dart';
 
-class LoginForm extends StatelessWidget {
-  const LoginForm({
+class CreateAccountForm extends StatelessWidget {
+  const CreateAccountForm({
     Key? key,
     required TextEditingController emailTextController,
     required TextEditingController passwordTextController,
@@ -27,12 +25,12 @@ class LoginForm extends StatelessWidget {
         children: [
           ListTile(
             leading: Icon(Icons.vpn_key_outlined),
-            title: const Text('Sign In'),
-            //subtitle: Text(
-            //'Secondary Text',
-            //style:
-            //TextStyle(color: Colors.black.withOpacity(0.6)),
-            //),
+            title: const Text('Create an Account'),
+            subtitle: Text(
+              'Please enter a valid email and password (Minimum 6 characters)',
+              //style:
+              //TextStyle(color: Colors.black.withOpacity(0.6)),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -75,18 +73,13 @@ class LoginForm extends StatelessWidget {
                         onPressed: () {
                           if (_globalKey!.currentState!.validate()) {
                             FirebaseAuth.instance
-                                .signInWithEmailAndPassword(
+                                .createUserWithEmailAndPassword(
                                     email: _emailTextController.text,
                                     password: _passwordTextController.text)
-                                .then((value) {
-                              return Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return MainPage();
-                              }));
-                            });
+                                .then((value) => print(value.user!.email));
                           }
                         },
-                        child: Text('Sign In')),
+                        child: Text('Create Account')),
                   )
                 ],
               ),
