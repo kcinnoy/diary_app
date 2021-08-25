@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -72,11 +73,22 @@ class CreateAccountForm extends StatelessWidget {
                             backgroundColor: Colors.tealAccent),
                         onPressed: () {
                           if (_globalKey!.currentState!.validate()) {
+                            String email = _emailTextController.text;
                             FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
-                                    email: _emailTextController.text,
+                                    email: email,
                                     password: _passwordTextController.text)
-                                .then((value) => print(value.user!.email));
+                                .then((value) {
+                              Map<String, dynamic> user = {
+                                'display_name': email.toString().split('@')[0],
+                                'avatar_url': 'https://google.com',
+                                'profession': 'astronaut',
+                                'uid': value.user!.uid
+                              };
+                              FirebaseFirestore.instance
+                                  .collection('users')
+                                  .add(user);
+                            });
                           }
                         },
                         child: Text('Create Account')),
