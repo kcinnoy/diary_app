@@ -88,11 +88,10 @@ class CreateAccountForm extends StatelessWidget {
                                     .createUser(email.toString().split('@')[0],
                                         context, uid)
                                     .then((value) {
-                                  FirebaseAuth.instance
-                                      .signInWithEmailAndPassword(
-                                          email: email,
-                                          password:
-                                              _passwordTextController.text)
+                                  DiaryService()
+                                      .loginUser(
+                                          email, _passwordTextController.text)
+                                      .then((value) => null)
                                       .then((value) {
                                     return Navigator.push(
                                         context,
