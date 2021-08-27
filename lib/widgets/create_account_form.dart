@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:diary_app/model/user.dart';
+import 'package:diary_app/screens/main_page.dart';
+import 'package:diary_app/services/service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -79,15 +82,25 @@ class CreateAccountForm extends StatelessWidget {
                                     email: email,
                                     password: _passwordTextController.text)
                                 .then((value) {
-                              Map<String, dynamic> user = {
-                                'display_name': email.toString().split('@')[0],
-                                'avatar_url': 'https://google.com',
-                                'profession': 'astronaut',
-                                'uid': value.user!.uid
-                              };
-                              FirebaseFirestore.instance
-                                  .collection('users')
-                                  .add(user);
+                              if (value.user != null) {
+                                String uid = value.user!.uid;
+                                DiaryService()
+                                    .createUser(email.toString().split('@')[0],
+                                        context, uid)
+                                    .then((value) {
+                                  FirebaseAuth.instance
+                                      .signInWithEmailAndPassword(
+                                          email: email,
+                                          password:
+                                              _passwordTextController.text)
+                                      .then((value) {
+                                    return Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => MainPage()));
+                                  });
+                                });
+                              }
                             });
                           }
                         },
