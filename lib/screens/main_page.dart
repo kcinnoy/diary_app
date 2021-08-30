@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:diary_app/model/user.dart';
 import 'package:diary_app/widgets/dropdown_one.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -85,43 +89,58 @@ class _MainPageState extends State<MainPage> {
               DropdownOne(
                 text: "CTA",
               ),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    children: [
-                      InkWell(
-                        child: CircleAvatar(
-                          child: Text(
-                            'James \n Smith',
-                            softWrap: true,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 10,
+              StreamBuilder<QuerySnapshot>(
+                stream:
+                    FirebaseFirestore.instance.collection('users').snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  final usersListStream = snapshot.data!.docs.map((docs) {
+                    return MUser.fromDocument(docs);
+                  }).where((muser) {
+                    return (muser.uid ==
+                        FirebaseAuth.instance.currentUser!.uid);
+                  });
+                  return Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            child: CircleAvatar(
+                              child: Text(
+                                'James \n Smith',
+                                softWrap: true,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 10,
+                                ),
+                              ),
+                              radius: 30,
+                              backgroundColor: Colors.red,
+                              backgroundImage: NetworkImage(
+                                  'https://picsum.photos/id/1005/200/300'),
                             ),
                           ),
-                          radius: 30,
-                          backgroundColor: Colors.red,
-                          backgroundImage: NetworkImage(
-                              'https://picsum.photos/id/1005/200/300'),
-                        ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            icon: Icon(
-                              Icons.view_agenda_outlined,
-                              size: 19,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {},
-                          )
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                icon: Icon(
+                                  Icons.view_agenda_outlined,
+                                  size: 19,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               ),
             ],
           ),
