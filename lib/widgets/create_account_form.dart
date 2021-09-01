@@ -91,7 +91,7 @@ class CreateAccountForm extends StatelessWidget {
                                   DiaryService()
                                       .loginUser(
                                           email, _passwordTextController.text)
-                                      .then((value) => null)
+                                      //.then((value) => null)
                                       .then((value) {
                                     return Navigator.push(
                                         context,

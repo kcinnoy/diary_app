@@ -101,7 +101,10 @@ class _MainPageState extends State<MainPage> {
                   }).where((muser) {
                     return (muser.uid ==
                         FirebaseAuth.instance.currentUser!.uid);
-                  });
+                  }).toList();
+
+                  MUser curUser = usersListStream[0];
+
                   return Container(
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -110,8 +113,9 @@ class _MainPageState extends State<MainPage> {
                           InkWell(
                             child: CircleAvatar(
                               child: Text(
-                                'James \n Smith',
+                                curUser.displayName!.toUpperCase(),
                                 softWrap: true,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 10,
