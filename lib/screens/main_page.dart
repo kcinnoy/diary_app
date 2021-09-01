@@ -123,8 +123,7 @@ class _MainPageState extends State<MainPage> {
                               ),
                               radius: 30,
                               backgroundColor: Colors.red,
-                              backgroundImage: NetworkImage(
-                                  'https://picsum.photos/id/1005/200/300'),
+                              backgroundImage: NetworkImage(curUser.avatarUrl!),
                             ),
                           ),
                           Column(

@@ -21,7 +21,7 @@ class DiaryService {
         uid: uid,
         displayName: displayName,
         //profession:
-        avatarUrl: 'https://picsum.photos/200/300');
+        avatarUrl: 'https://i.pravatar.cc/300');
     userCollectionReference.add(user.toMap());
     return;
   }
