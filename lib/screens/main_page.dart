@@ -125,6 +125,15 @@ class _MainPageState extends State<MainPage> {
                               backgroundColor: Colors.red,
                               backgroundImage: NetworkImage(curUser.avatarUrl!),
                             ),
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text(curUser.displayName!),
+                                    );
+                                  });
+                            },
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
