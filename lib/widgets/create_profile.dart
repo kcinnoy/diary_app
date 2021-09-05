@@ -1,6 +1,8 @@
-import 'dart:ui';
-
 import 'package:diary_app/model/user.dart';
+import 'package:diary_app/screens/login_page.dart';
+import 'package:diary_app/services/service.dart';
+import 'package:diary_app/widgets/update_user_profile_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CreateProfile extends StatelessWidget {
@@ -42,54 +44,10 @@ class CreateProfile extends StatelessWidget {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return AlertDialog(
-                          content: Container(
-                        width: MediaQuery.of(context).size.width * 0.40,
-                        height: MediaQuery.of(context).size.height * 0.40,
-                        child: Column(
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                text: 'Edit User: ',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                                children: [
-                                  TextSpan(
-                                      text:
-                                          '${curUser.displayName!.toUpperCase()}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black))
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.50,
-                              child: Form(
-                                child: Column(
-                                  children: [
-                                    TextFormField(
-                                      controller: _displayNameTextController,
-                                    ),
-                                    TextFormField(
-                                      controller: _avatarUrlTextController,
-                                    ),
-                                    SizedBox(height: 30),
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: Text('Update'),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ));
+                      return UpdateUserProfileDialog(
+                          curUser: curUser,
+                          displayNameTextController: _displayNameTextController,
+                          avatarUrlTextController: _avatarUrlTextController);
                     });
               },
             ),
@@ -102,7 +60,14 @@ class CreateProfile extends StatelessWidget {
                     size: 19,
                     color: Colors.black,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut().then((value) {
+                      return Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    });
+                  },
                 )
               ],
             ),

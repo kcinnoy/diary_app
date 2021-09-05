@@ -32,5 +32,6 @@ class DiaryService {
     MUser updateUser =
         MUser(displayName: displayName, avatarUrl: avatarUrl, uid: user.uid);
     userCollectionReference.doc(user.id).update(updateUser.toMap());
+    return;
   }
 }
