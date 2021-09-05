@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:diary_app/model/user.dart';
 import 'package:firebase/firebase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DiaryService {
@@ -24,5 +25,12 @@ class DiaryService {
         avatarUrl: 'https://i.pravatar.cc/300');
     userCollectionReference.add(user.toMap());
     return;
+  }
+
+  Future<void> update(MUser user, String displayName, String avatarUrl,
+      BuildContext context) async {
+    MUser updateUser =
+        MUser(displayName: displayName, avatarUrl: avatarUrl, uid: user.uid);
+    userCollectionReference.doc(user.id).update(updateUser.toMap());
   }
 }

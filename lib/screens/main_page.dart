@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:diary_app/model/user.dart';
+import 'package:diary_app/widgets/create_profile.dart';
 import 'package:diary_app/widgets/dropdown_one.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -105,53 +106,7 @@ class _MainPageState extends State<MainPage> {
 
                   MUser curUser = usersListStream[0];
 
-                  return Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          InkWell(
-                            child: CircleAvatar(
-                              child: Text(
-                                curUser.displayName!.toUpperCase(),
-                                softWrap: true,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 10,
-                                ),
-                              ),
-                              radius: 30,
-                              backgroundColor: Colors.red,
-                              backgroundImage: NetworkImage(curUser.avatarUrl!),
-                            ),
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text(curUser.displayName!),
-                                    );
-                                  });
-                            },
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.view_agenda_outlined,
-                                  size: 19,
-                                  color: Colors.black,
-                                ),
-                                onPressed: () {},
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+                  return CreateProfile(curUser: curUser);
                 },
               ),
             ],
