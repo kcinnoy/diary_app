@@ -149,7 +149,6 @@ class _MainPageState extends State<MainPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: TextButton.icon(
-                          onPressed: () {},
                           icon: Icon(
                             Icons.add_circle_outline_outlined,
                             size: 20,
@@ -167,6 +166,144 @@ class _MainPageState extends State<MainPage> {
                               ),
                             ),
                           ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            TextButton(
+                                              child: Text('Discard'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            TextButton(
+                                              child: Text('Done'),
+                                              style: TextButton.styleFrom(
+                                                primary: Colors.white,
+                                                backgroundColor: Colors.green,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(15),
+                                                  ),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                //ToDo: add function
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 30),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                            color: Colors.green,
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Container(
+                                                      color: Colors.blue,
+                                                      child: Text('Date')),
+                                                ),
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Container(
+                                                    color: Colors.red,
+                                                    child: Text('June 7, 2021'),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                            color: Colors.green,
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Container(
+                                                      color: Colors.blue,
+                                                      child:
+                                                          Text('Add image:')),
+                                                ),
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Container(
+                                                    color: Colors.red,
+                                                    child: IconButton(
+                                                      icon: Icon(
+                                                          Icons.image_outlined),
+                                                      onPressed: () {},
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.5,
+                                          child: Form(
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.8 /
+                                                      2,
+                                                  child: Container(
+                                                    color: Colors.amber,
+                                                    child: Text(
+                                                        'Image place holder'),
+                                                  ),
+                                                ),
+                                                TextFormField(
+                                                  controller:
+                                                      _titleTextController,
+                                                  decoration: InputDecoration(
+                                                      hintText: 'Title'),
+                                                ),
+                                                TextFormField(
+                                                  controller:
+                                                      _descriptionTextController,
+                                                  decoration: InputDecoration(
+                                                      hintText: 'Title'),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
                         ),
                       ),
                     ),
