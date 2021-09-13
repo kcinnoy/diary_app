@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:diary_app/model/user.dart';
 import 'package:diary_app/widgets/create_profile.dart';
 import 'package:diary_app/widgets/dropdown_one.dart';
+import 'package:diary_app/widgets/new_post_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,9 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _titleTextController = TextEditingController();
+    final _descriptionTextController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         //primary: false,
@@ -170,137 +174,10 @@ class _MainPageState extends State<MainPage> {
                             showDialog(
                               context: context,
                               builder: (context) {
-                                return AlertDialog(
-                                  content: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            TextButton(
-                                              child: Text('Discard'),
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            TextButton(
-                                              child: Text('Done'),
-                                              style: TextButton.styleFrom(
-                                                primary: Colors.white,
-                                                backgroundColor: Colors.green,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(15),
-                                                  ),
-                                                ),
-                                              ),
-                                              onPressed: () {
-                                                //ToDo: add function
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(height: 30),
-                                        Expanded(
-                                          flex: 1,
-                                          child: Container(
-                                            color: Colors.green,
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Container(
-                                                      color: Colors.blue,
-                                                      child: Text('Date')),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    color: Colors.red,
-                                                    child: Text('June 7, 2021'),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Expanded(
-                                          flex: 1,
-                                          child: Container(
-                                            color: Colors.green,
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Container(
-                                                      color: Colors.blue,
-                                                      child:
-                                                          Text('Add image:')),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    color: Colors.red,
-                                                    child: IconButton(
-                                                      icon: Icon(
-                                                          Icons.image_outlined),
-                                                      onPressed: () {},
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.5,
-                                          child: Form(
-                                            child: Column(
-                                              children: [
-                                                SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.8 /
-                                                      2,
-                                                  child: Container(
-                                                    color: Colors.amber,
-                                                    child: Text(
-                                                        'Image place holder'),
-                                                  ),
-                                                ),
-                                                TextFormField(
-                                                  controller:
-                                                      _titleTextController,
-                                                  decoration: InputDecoration(
-                                                      hintText: 'Title'),
-                                                ),
-                                                TextFormField(
-                                                  controller:
-                                                      _descriptionTextController,
-                                                  decoration: InputDecoration(
-                                                      hintText: 'Title'),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
+                                return NewPostDialog(
+                                    titleTextController: _titleTextController,
+                                    descriptionTextController:
+                                        _descriptionTextController);
                               },
                             );
                           },

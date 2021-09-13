@@ -1,0 +1,164 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:diary_app/model/diary.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+class NewPostDialog extends StatefulWidget {
+  const NewPostDialog({
+    Key? key,
+    required TextEditingController titleTextController,
+    required TextEditingController descriptionTextController,
+  })  : _titleTextController = titleTextController,
+        _descriptionTextController = descriptionTextController,
+        super(key: key);
+
+  final TextEditingController _titleTextController;
+  final TextEditingController _descriptionTextController;
+
+  @override
+  _NewPostDialogState createState() => _NewPostDialogState();
+}
+
+class _NewPostDialogState extends State<NewPostDialog> {
+  var _buttonText = 'Done';
+  CollectionReference diaryCollectionReference =
+      FirebaseFirestore.instance.collection('diaries');
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  child: Text('Discard'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                TextButton(
+                  child: Text(_buttonText),
+                  style: TextButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    final _fieldsNotEmpty = widget._titleTextController
+                            .toString()
+                            .isNotEmpty &&
+                        widget._descriptionTextController.toString().isNotEmpty;
+
+                    if (_fieldsNotEmpty) {
+                      diaryCollectionReference.add(Diary(
+                        title: widget._titleTextController.text,
+                        description: widget._descriptionTextController.text,
+                        userId: FirebaseAuth.instance.currentUser!.uid,
+                        entryTime: Timestamp.fromDate(DateTime.now()),
+                        author: 'Paul',
+                      ).toMap());
+                    }
+
+                    setState(() {
+                      _buttonText = 'Saving...';
+                    });
+                    Future.delayed(
+                      Duration(milliseconds: 2000),
+                    ).then((value) => Navigator.of(context).pop());
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 30),
+            Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.green,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Container(color: Colors.blue, child: Text('Date')),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        color: Colors.red,
+                        child: Text('June 7, 2021'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.green,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                          color: Colors.blue, child: Text('Add image:')),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        color: Colors.red,
+                        child: IconButton(
+                          icon: Icon(Icons.image_outlined),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 1,
+              child: Form(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.8 / 2,
+                      child: Container(
+                        alignment: Alignment.topLeft,
+                        color: Colors.amber,
+                        child: Text('Image place holder'),
+                      ),
+                    ),
+                    TextFormField(
+                      controller: widget._titleTextController,
+                      decoration: InputDecoration(hintText: 'Title'),
+                    ),
+                    TextFormField(
+                      maxLines: null,
+                      controller: widget._descriptionTextController,
+                      decoration:
+                          InputDecoration(hintText: "What's on your mind?"),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
