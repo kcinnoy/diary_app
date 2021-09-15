@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:diary_app/model/diary.dart';
 import 'package:diary_app/model/user.dart';
 import 'package:diary_app/widgets/create_profile.dart';
 import 'package:diary_app/widgets/dropdown_one.dart';
@@ -17,6 +18,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   String? _dropDownText;
+  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -142,8 +144,10 @@ class _MainPageState extends State<MainPage> {
                   Padding(
                     padding: const EdgeInsets.all(38.0),
                     child: SfDateRangePicker(
-                      onSelectionChanged:
-                          (dateRangePickerSelectionChangedArgs) {},
+                      onSelectionChanged: (dateRangePickerSelection) {
+                        setState(() {});
+                        selectedDate = dateRangePickerSelection.value;
+                      },
                     ),
                   ),
                   Padding(
@@ -175,6 +179,7 @@ class _MainPageState extends State<MainPage> {
                               context: context,
                               builder: (context) {
                                 return NewPostDialog(
+                                    selectedDate: selectedDate,
                                     titleTextController: _titleTextController,
                                     descriptionTextController:
                                         _descriptionTextController);
@@ -189,38 +194,55 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
           ),
-          Expanded(
-            flex: 3,
-            child: Container(
-              child: Column(
-                children: [
-                  Expanded(
-                      child: Container(
+          StreamBuilder<QuerySnapshot>(
+              stream:
+                  FirebaseFirestore.instance.collection('diaries').snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+                var filteredList = snapshot.data!.docs.map((diary) {
+                  return Diary.fromDocument(diary);
+                }).where((item) {
+                  return (item.userId ==
+                      FirebaseAuth.instance.currentUser!.uid);
+                }).toList();
+
+                return Expanded(
+                  flex: 3,
+                  child: Container(
                     child: Column(
                       children: [
                         Expanded(
-                          child: ListView.builder(
-                            itemCount: 5,
-                            itemBuilder: (context, index) {
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                child: Card(
-                                  elevation: 4,
-                                  child: ListTile(
-                                    title: Text('Hi'),
-                                  ),
+                            child: Container(
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: filteredList.length,
+                                  itemBuilder: (context, index) {
+                                    Diary diary = filteredList[index];
+                                    return SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: Card(
+                                        elevation: 4,
+                                        child: ListTile(
+                                          title: Text(diary.title!),
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
+                              )
+                            ],
                           ),
-                        )
+                        ))
                       ],
                     ),
-                  ))
-                ],
-              ),
-            ),
-          )
+                  ),
+                );
+              })
         ],
       ),
       floatingActionButton: FloatingActionButton(

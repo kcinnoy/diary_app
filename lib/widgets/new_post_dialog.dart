@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class NewPostDialog extends StatefulWidget {
   const NewPostDialog({
     Key? key,
+    this.selectedDate,
     required TextEditingController titleTextController,
     required TextEditingController descriptionTextController,
   })  : _titleTextController = titleTextController,
@@ -14,6 +15,7 @@ class NewPostDialog extends StatefulWidget {
 
   final TextEditingController _titleTextController;
   final TextEditingController _descriptionTextController;
+  final DateTime? selectedDate;
 
   @override
   _NewPostDialogState createState() => _NewPostDialogState();
@@ -94,7 +96,7 @@ class _NewPostDialogState extends State<NewPostDialog> {
                       flex: 2,
                       child: Container(
                         color: Colors.red,
-                        child: Text('June 7, 2021'),
+                        child: Text(widget.selectedDate!.toString()),
                       ),
                     ),
                   ],
