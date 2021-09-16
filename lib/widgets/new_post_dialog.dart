@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:diary_app/model/diary.dart';
+import 'package:diary_app/util/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -66,8 +67,9 @@ class _NewPostDialogState extends State<NewPostDialog> {
                         title: widget._titleTextController.text,
                         description: widget._descriptionTextController.text,
                         userId: FirebaseAuth.instance.currentUser!.uid,
-                        entryTime: Timestamp.fromDate(DateTime.now()),
-                        author: 'Paul',
+                        entryTime: Timestamp.fromDate(widget.selectedDate!),
+                        author: FirebaseAuth.instance.currentUser!.email!
+                            .split('@')[0],
                       ).toMap());
                     }
 
@@ -96,7 +98,7 @@ class _NewPostDialogState extends State<NewPostDialog> {
                       flex: 2,
                       child: Container(
                         color: Colors.red,
-                        child: Text(widget.selectedDate!.toString()),
+                        child: Text(formatDate(widget.selectedDate!)),
                       ),
                     ),
                   ],
