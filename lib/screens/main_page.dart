@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:diary_app/model/diary.dart';
 import 'package:diary_app/model/user.dart';
 import 'package:diary_app/widgets/create_profile.dart';
+import 'package:diary_app/widgets/diary_list_view.dart';
 import 'package:diary_app/widgets/dropdown_one.dart';
 import 'package:diary_app/widgets/new_post_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -194,55 +195,7 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
           ),
-          StreamBuilder<QuerySnapshot>(
-              stream:
-                  FirebaseFirestore.instance.collection('diaries').snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                }
-                var filteredList = snapshot.data!.docs.map((diary) {
-                  return Diary.fromDocument(diary);
-                }).where((item) {
-                  return (item.userId ==
-                      FirebaseAuth.instance.currentUser!.uid);
-                }).toList();
-
-                return Expanded(
-                  flex: 3,
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Expanded(
-                            child: Container(
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: ListView.builder(
-                                  itemCount: filteredList.length,
-                                  itemBuilder: (context, index) {
-                                    Diary diary = filteredList[index];
-                                    return SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.4,
-                                      child: Card(
-                                        elevation: 4,
-                                        child: ListTile(
-                                          title: Text(diary.title!),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            ],
-                          ),
-                        ))
-                      ],
-                    ),
-                  ),
-                );
-              })
+          DiaryListView()
         ],
       ),
       floatingActionButton: FloatingActionButton(
