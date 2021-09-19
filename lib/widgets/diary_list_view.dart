@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:diary_app/model/diary.dart';
+import 'package:diary_app/util/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -22,38 +23,47 @@ class DiaryListView extends StatelessWidget {
             return (item.userId == FirebaseAuth.instance.currentUser!.uid);
           }).toList();
 
-          return Expanded(
-            flex: 3,
-            child: Container(
-              child: Column(
-                children: [
-                  Expanded(
-                      child: Container(
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: filteredList.length,
-                            itemBuilder: (context, index) {
-                              Diary diary = filteredList[index];
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                child: Card(
-                                  elevation: 4,
-                                  child: ListTile(
-                                    title: Text(diary.title!),
+          return Column(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView.builder(
+                    itemCount: filteredList.length,
+                    itemBuilder: (context, index) {
+                      Diary diary = filteredList[index];
+                      return Card(
+                        elevation: 4,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '${formatDate(diary.entryTime!.toDate())}',
+                                    style: TextStyle(
+                                        color: Colors.blueGrey,
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                  ))
-                ],
-              ),
-            ),
+                                  TextButton.icon(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.highlight_remove),
+                                      label: Text('')),
+                                  //Text(diary.title!),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              )
+            ],
           );
         });
   }
