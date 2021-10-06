@@ -3,6 +3,7 @@ import 'package:diary_app/model/diary.dart';
 import 'package:diary_app/util/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class DiaryListView extends StatelessWidget {
   const DiaryListView({
@@ -35,6 +36,7 @@ class DiaryListView extends StatelessWidget {
                       return Card(
                         elevation: 4,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ListTile(
                               title: Row(
@@ -42,19 +44,78 @@ class DiaryListView extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '${formatDate(diary.entryTime!.toDate())}',
+                                    '${formatDateFromTimestamp(diary.entryTime)}',
                                     style: TextStyle(
                                         color: Colors.blueGrey,
                                         fontSize: 19,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  TextButton.icon(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.highlight_remove),
-                                      label: Text('')),
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      minimumSize: Size(50, 30),
+                                      // alignment: Alignment.centerLeft,
+                                    ),
+                                    onPressed: () {},
+                                    child: Icon(Icons.highlight_remove),
+                                    //label: Text(''),
+                                  ),
                                   //Text(diary.title!),
                                 ],
                               ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  20.0, 10.0, 20.0, 10.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '${formatDateFromTimestampHour(diary.entryTime)}',
+                                    style: TextStyle(
+                                        color: Colors.blueGrey,
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      minimumSize: Size(50, 30),
+                                      alignment: Alignment.centerRight,
+                                    ),
+                                    onPressed: () {},
+                                    child: Icon(Icons.highlight_remove),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  20.0, 10.0, 20.0, 10.0),
+                              child: Image.network(
+                                  'https://picsum.photos/400/200'),
+                              //SizedBox(
+                              //  width: 200,
+                              // height: 100,
+                              // child: Container(
+                              //  color: Colors.green,
+                              //),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      20.0, 10.0, 20.0, 10.0),
+                                  child: Text('Text header goes here...'),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      20.0, 10.0, 20.0, 10.0),
+                                  child: Text('Text goes here...'),
+                                ),
+                              ],
                             ),
                           ],
                         ),
