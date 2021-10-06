@@ -72,11 +72,10 @@ class DiaryListView extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '${formatDateFromTimestampHour(diary.entryTime)}',
+                                    '•${formatDateFromTimestampHour(diary.entryTime)}',
                                     style: TextStyle(
-                                        color: Colors.blueGrey,
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.bold),
+                                      color: Colors.green,
+                                    ),
                                   ),
                                   TextButton(
                                     style: TextButton.styleFrom(
@@ -85,7 +84,7 @@ class DiaryListView extends StatelessWidget {
                                       alignment: Alignment.centerRight,
                                     ),
                                     onPressed: () {},
-                                    child: Icon(Icons.highlight_remove),
+                                    child: Icon(Icons.more_horiz),
                                   ),
                                 ],
                               ),

@@ -3,6 +3,7 @@ import 'package:diary_app/model/diary.dart';
 import 'package:diary_app/util/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 
 class NewPostDialog extends StatefulWidget {
   const NewPostDialog({
@@ -164,5 +165,20 @@ class _NewPostDialogState extends State<NewPostDialog> {
         ),
       ),
     );
+  }
+}
+
+Future<void> getMultipleImageInfos() async {
+  var mediaData = await ImagePickerWeb.getImageInfo;
+  String mimeType = mime(Path.basename(mediaData.fileName));
+  html.File mediaFile =
+      new html.File(mediaData.data, mediaData.fileName, {'type': mimeType});
+
+  if (mediaFile != null) {
+    setState(() {
+      _cloudFile = mediaFile;
+      _fileBytes = mediaData.data;
+      _imageWidget = Image.memory(mediaData.data);
+    });
   }
 }
